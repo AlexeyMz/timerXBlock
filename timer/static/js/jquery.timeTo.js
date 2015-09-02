@@ -79,16 +79,7 @@
     };
 
     var dictionary = {
-        en:{days:'days',   hours:'hours',  min:'minutes',  sec:'seconds'},
-        ru:{days:'дней',   hours:'часов',  min:'минут',    sec:'секунд'},
-        ua:{days:'днiв',   hours:'годин',  min:'хвилин',   sec:'секунд'},
-        de:{days:'Tag',    hours:'Uhr',    min:'Minuten',  sec:'Secunden'},
-        fr:{days:'jours',  hours:'heures', min:'minutes',  sec:'secondes'},
-        sp:{days:'días',   hours:'reloj',  min:'minutos',  sec:'segundos'},
-        it:{days:'giorni', hours:'ore',    min:'minuti',   sec:'secondi'},
-        nl:{days:'dagen',  hours:'uren',   min:'minuten',  sec:'seconden'},
-        no:{days:'dager',  hours:'timer',  min:'minutter', sec:'sekunder'},
-        pt:{days:'dias',   hours:'horas',  min:'minutos',  sec:'segundos'}
+        en:{days:'days',   hours:'hours',  min:'minutes',  sec:'seconds'}
     };
     
     if(typeof $.support.transition === 'undefined') {
