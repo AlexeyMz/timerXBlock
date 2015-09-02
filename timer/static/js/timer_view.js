@@ -5,6 +5,32 @@ function timerXBlockInitView(runtime, element) {
      * In the CMS, element is the jQuery object associated*
      * So here I make sure element is the jQuery object */
     if(element.innerHTML) element = $(element);
-    var $countdonwn = $('#countdown');
-    $countdonwn.timeTo({ seconds: parseInt($countdonwn.attr('data-seconds'), 10), displayHours: false });
+    var $countdonwn = element.find('.countdown');
+    debugger;
+    var usageId = element.attr('data-usage-id');
+    var key = "timerXBlock_" + encodeURIComponent(usageId);
+    var startDate = localStorage.getItem(key);
+    if (startDate) {
+        startDate = startDate ? Date.parse(startDate);
+    } else {
+        startDate = new Date();
+        localStorage.setItem(key, startDate);
+    }
+    var limitSeconds = parseInt($countdonwn.attr('data-seconds'), 10);
+    var now = new Date();
+    var secondsLeft = (now - startDate).getTime() / 1000 - limitSeconds;
+    console.log('seconds left: ' + secondsLeft);
+    if (secondsLeft > 0) {
+        $countdonwn.timeTo({
+            seconds: limitSeconds,
+            displayHours: false,
+            callback:  onLimitReached
+        });
+    } else {
+        $countdonwn.timeTo({ seconds: 0, displayHours: false });
+        onLimitReached();
+    }
+    function onLimitReached() {
+        alert('end!');
+    }
 }
