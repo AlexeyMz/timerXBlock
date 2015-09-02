@@ -7,9 +7,8 @@ from django.template import Context, Template
 from xblock.core import XBlock
 from xblock.fields import Scope, Integer, String, Boolean
 from xblock.fragment import Fragment
-from xmodule.studio_editable import StudioEditableModule
 
-class timerXBlock(XBlock, StudioEditableModule):
+class timerXBlock(XBlock):
 
     '''
     Icon of the XBlock. Values : [other (default), video, problem]
@@ -91,25 +90,25 @@ class timerXBlock(XBlock, StudioEditableModule):
         frag.initialize_js('timerXBlockInitAuthor')
         return frag
 
-#    def studio_view(self, context=None):
-#        """
-#        The secondary view of the XBlock, shown to teachers
-#        when editing the XBlock.
-#        """
-#        context = {
-#            'display_name': self.display_name,
-#            'time_limit_seconds': self.time_limit_seconds,
-#            'redirect_url': self.redirect_url,
-#        }
-#        html = self.render_template('static/html/timer_edit.html', context)
-#        
-#        frag = Fragment(html)
-#        frag.add_css(self.load_resource("static/css/timer.css"))
-#        frag.add_css(self.load_resource("static/css/timeTo.css"))
-#        frag.add_javascript(self.load_resource("static/js/timer_edit.js"))
-#        frag.add_javascript(self.load_resource("static/js/jquery.timeTo.js"))
-#        frag.initialize_js('timerXBlockInitEdit')
-#        return frag
+    def studio_view(self, context=None):
+        """
+        The secondary view of the XBlock, shown to teachers
+        when editing the XBlock.
+        """
+        context = {
+            'display_name': self.display_name,
+            'time_limit_seconds': self.time_limit_seconds,
+            'redirect_url': self.redirect_url,
+        }
+        html = self.render_template('static/html/timer_edit.html', context)
+        
+        frag = Fragment(html)
+        frag.add_css(self.load_resource("static/css/timer.css"))
+        frag.add_css(self.load_resource("static/css/timeTo.css"))
+        frag.add_javascript(self.load_resource("static/js/timer_edit.js"))
+        frag.add_javascript(self.load_resource("static/js/jquery.timeTo.js"))
+        frag.initialize_js('timerXBlockInitEdit')
+        return frag
 
     @XBlock.json_handler
     def save_flash(self, data, suffix=''):
