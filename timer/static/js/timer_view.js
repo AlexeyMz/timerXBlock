@@ -27,7 +27,7 @@ function timerXBlockInitView(runtime, element) {
             callback:  onLimitReached
         });
     } else {
-        $countdonwn.timeTo({ seconds: 0, displayHours: false });
+        $countdonwn.timeTo({ seconds: 1, displayHours: false });
         onLimitReached();
     }
     function onLimitReached() {
