@@ -19,7 +19,7 @@ class timerXBlock(XBlock):
     Fields
     '''
     display_name = String(display_name="Название блока",
-        default="Время до окончания тестирования",
+        default="Time Limit",
         scope=Scope.settings,
         help="Название блока, отображаемое в строке навигации в верхней части страницы.")
 
