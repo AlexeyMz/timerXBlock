@@ -5,6 +5,7 @@ function timerXBlockInitAuthor(runtime, element) {
      * In the CMS, element is the jQuery object associated*
      * So here I make sure element is the jQuery object */
     if(element.innerHTML) element = $(element);
+    debugger;
     var $countdonwn = $('#countdown');
     $countdonwn.timeTo({ seconds: parseInt($countdonwn.attr('data-seconds'), 10), displayHours: false, start: false });
 }
