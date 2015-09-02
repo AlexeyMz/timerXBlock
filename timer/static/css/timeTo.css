@@ -11,15 +11,15 @@ figure, figcaption {
 }
 
 .timeTo {
-	font-family: Tahoma, Verdana, Aial, sans-serif;
-	font-size: 28px;
-	line-height: 108%;
-	font-weight: bold;
-	height: 32px;
+	font-family: Tahoma, Verdana, Aial, sans-serif !important;
+	font-size: 28px !important;
+	line-height: 108% !important;
+	font-weight: bold !important;
+	height: 32px !important;
 }
 
 .timeTo span {
-	vertical-align: top;
+	vertical-align: top !important;
 }
 
 .timeTo.timeTo-white div {
