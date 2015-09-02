@@ -11,7 +11,7 @@ function timerXBlockInitView(runtime, element) {
     var key = "timerXBlock_" + encodeURIComponent(usageId);
     var startDate = localStorage.getItem(key);
     if (startDate) {
-        startDate = Date.parse(startDate);
+        startDate = new Date(startDate);
     } else {
         startDate = new Date();
         localStorage.setItem(key, startDate);
