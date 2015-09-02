@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """ timerXBlock main Python class"""
 
 import pkg_resources
@@ -17,30 +18,20 @@ class timerXBlock(XBlock):
     '''
     Fields
     '''
-    display_name = String(display_name="Display Name",
-        default="Flash",
+    display_name = String(display_name="Название блока",
+        default="Время до окончания тестирования",
         scope=Scope.settings,
-        help="This name appears in the horizontal navigation at the top of the page.")
+        help="Название блока, отображаемое в строке навигации в верхней части страницы.")
 
-    url = String(display_name="Flash file URL (.swf)",
+    time_limit_seconds = Integer(display_name="Ограничение по времени (секунды)",
+        default="1200",
+        scope=Scope.content,
+        help="Ограничение по времени на прохождение тестирования в секундах.")
+    
+    redirect_url = String(display_name="URL для перехода при окончании тестирования",
         default="",
         scope=Scope.content,
-        help="The URL for your flash file.")
-    
-    allow_download = Boolean(display_name="Flash Download Allowed",
-        default=True,
-        scope=Scope.content,
-        help="Display a download button for this flash file.")
-    
-    source_text = String(display_name="Source document button text",
-        default="",
-        scope=Scope.content,
-        help="Add a download link for the source document of your flash file. Use it for example to provide another format.")
-    
-    source_url = String(display_name="Source document URL",
-        default="",
-        scope=Scope.content,
-        help="Add a download link for the source document of your flash file. Use it for example to provide another format.")
+        help="Адрес страницы, на которую будет осуществлён переход при истечении времени тестирования.")
 
     '''
     Util functions
@@ -70,17 +61,17 @@ class timerXBlock(XBlock):
         
         context = {
             'display_name': self.display_name,
-            'url': self.url,
-            'allow_download': self.allow_download,
-            'source_text': self.source_text,
-            'source_url': self.source_url
+            'time_limit_seconds': self.time_limit_seconds,
+            'redirect_url': self.redirect_url,
         }
-        html = self.render_template('static/html/flash_view.html', context)
+        html = self.render_template('static/html/timer_view.html', context)
         
         frag = Fragment(html)
-        frag.add_css(self.load_resource("static/css/flash.css"))
-        frag.add_javascript(self.load_resource("static/js/flash_view.js"))
-        frag.initialize_js('flashXBlockInitView')
+        frag.add_css(self.load_resource("static/css/timer.css"))
+        frag.add_css(self.load_resource("static/css/timeTo.css"))
+        frag.add_javascript(self.load_resource("static/js/timer_view.js"))
+        frag.add_javascript(self.load_resource("static/js/jquery.timeTo.js"))
+        frag.initialize_js('timerXBlockInitView')
         return frag
 
     def studio_view(self, context=None):
@@ -90,16 +81,17 @@ class timerXBlock(XBlock):
         """
         context = {
             'display_name': self.display_name,
-            'url': self.url,
-            'allow_download': self.allow_download,
-            'source_text': self.source_text,
-            'source_url': self.source_url
+            'time_limit_seconds': self.time_limit_seconds,
+            'redirect_url': self.redirect_url,
         }
-        html = self.render_template('static/html/flash_edit.html', context)
+        html = self.render_template('static/html/timer_edit.html', context)
         
         frag = Fragment(html)
-        frag.add_javascript(self.load_resource("static/js/flash_edit.js"))
-        frag.initialize_js('flashXBlockInitEdit')
+        frag.add_css(self.load_resource("static/css/timer.css"))
+        frag.add_css(self.load_resource("static/css/timeTo.css"))
+        frag.add_javascript(self.load_resource("static/js/timer_edit.js"))
+        frag.add_javascript(self.load_resource("static/js/jquery.timeTo.js"))
+        frag.initialize_js('timerXBlockInitEdit')
         return frag
 
     @XBlock.json_handler
@@ -108,10 +100,8 @@ class timerXBlock(XBlock):
         The saving handler.
         """
         self.display_name = data['display_name']
-        self.url = data['url']
-        self.allow_download = True if data['allow_download'] == "True" else False # Str to Bool translation
-        self.source_text = data['source_text']
-        self.source_url = data['source_url']
+        self.time_limit_seconds = data['time_limit_seconds']
+        self.redirect_url = data['redirect_url']
         
         return {
             'result': 'success',
