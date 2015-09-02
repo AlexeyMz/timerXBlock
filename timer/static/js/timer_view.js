@@ -4,9 +4,9 @@ function timerXBlockInitView(runtime, element) {
      * In the LMS, element is the DOM container.
      * In the CMS, element is the jQuery object associated*
      * So here I make sure element is the jQuery object */
-    if(element.innerHTML) element = $(element);
-    var $countdonwn = element.find('.countdown');
     debugger;
+    if (element.innerHTML) element = $(element);
+    var $countdonwn = element.find('.countdown');
     var usageId = element.attr('data-usage-id');
     var key = "timerXBlock_" + encodeURIComponent(usageId);
     var startDate = localStorage.getItem(key);
