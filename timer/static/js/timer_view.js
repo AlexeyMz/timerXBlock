@@ -18,7 +18,7 @@ function timerXBlockInitView(runtime, element) {
     }
     var limitSeconds = parseInt($countdonwn.attr('data-seconds'), 10);
     var now = new Date();
-    var secondsLeft = (now - startDate).getTime() / 1000 - limitSeconds;
+    var secondsLeft = (now - startDate) / 1000 - limitSeconds;
     console.log('seconds left: ' + secondsLeft);
     if (secondsLeft > 0) {
         $countdonwn.timeTo({
