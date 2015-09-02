@@ -18,6 +18,11 @@ figure, figcaption {
 	height: 32px !important;
 }
 
+.timeTo li {
+    font-family: Tahoma, Verdana, Aial, sans-serif !important;
+	font-size: 28px !important;
+}
+
 .timeTo span {
 	vertical-align: top !important;
 }
