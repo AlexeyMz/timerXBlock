@@ -7,6 +7,15 @@ function timerXBlockInitView(runtime, element) {
     debugger;
     if (element.innerHTML) element = $(element);
     var $countdonwn = element.find('.countdown');
+    if ($(".xblock-author_view.xmodule_VerticalModule").length !== 0) {
+        /* xblock rendered in author_view */
+        $countdonwn.timeTo({
+            seconds: parseInt($countdonwn.attr('data-seconds'), 10),
+            displayHours: false,
+            start: false
+        });
+        return;
+    }
     var usageId = element.attr('data-usage-id');
     var key = "timerXBlock_" + encodeURIComponent(usageId);
     var startDateText = localStorage.getItem(key);
@@ -17,7 +26,7 @@ function timerXBlockInitView(runtime, element) {
             startDate = new Date();
             localStorage.setItem(key, startDate);
             resumeTimer(startDate);
-        });
+        }, true);
     }
     
     function resumeTimer(startDate) {
@@ -39,9 +48,9 @@ function timerXBlockInitView(runtime, element) {
     function onLimitReached() {
         showModalOverlay("TIME_OVER", "ACTION_SEE_RESULTS", function () {
             window.location.href = "../../../progress";
-        });
+        }, false);
     }
-    function showModalOverlay(contentText, actionText, actionCallback) {
+    function showModalOverlay(contentText, actionText, actionCallback, dismissOnAction) {
         var $overlay = $(".timerModalOverlay");
         if ($overlay.length === 0) {
             $overlay = $("<div class='timerModalOverlay'/>").appendTo(document.body);
@@ -51,7 +60,7 @@ function timerXBlockInitView(runtime, element) {
             .append($("<a class='timerModalAction' href='javascript:void(0)'>")
                 .text(actionText)
                 .click(function() {
-                    $overlay.remove();
+                    if (dismissOnAction) { $overlay.remove(); }
                     actionCallback();
                 }));
     }
