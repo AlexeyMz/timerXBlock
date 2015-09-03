@@ -17,6 +17,18 @@ function timerXBlockInitView(runtime, element) {
         });
         return;
     }
+    $.ajax({
+        url: $countdonwn.attr("data-student-has-course-state-url"),
+        success: function (result) {
+            console.log("success");
+            console.log(result);
+        },
+        error: function (xhr, textStatus, errorThrown) {
+            console.log("error")
+            console.log([textStatus, errorThrown]);
+        }
+    });
+    return;
     var usageId = element.attr('data-usage-id');
     var key = "timerXBlock_" + encodeURIComponent(usageId);
     var startDateText = localStorage.getItem(key);

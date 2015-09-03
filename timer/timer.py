@@ -58,7 +58,6 @@ class timerXBlock(XBlock):
         The primary view of the XBlock, shown to students
         when viewing courses.
         """
-        
         context = {
             'display_name': self.display_name,
             'time_limit_seconds': self.time_limit_seconds,
@@ -71,6 +70,10 @@ class timerXBlock(XBlock):
                 'minutes_forms': u'["минута","минуты","минут"]',
                 'seconds_forms': u'["секунда","секунды","секунд"]',
             },
+            'student_has_course_state_url': reverse('student_has_course_state',
+                kwargs={'course_id': unicode(course_key)}),
+            'reset_all_student_attempts_url': reverse('reset_all_student_attempts',
+                kwargs={'course_id': unicode(course_key)}),
         }
         html = self.render_template('static/html/timer_view.html', context)
         
