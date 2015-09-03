@@ -26,13 +26,13 @@ function timerXBlockInitView(runtime, element) {
         var timespanText = "";
         var limitOnlyMinutes = Math.floor(limitSeconds / 60);
         if (limitOnlyMinutes > 0) {
-            timespanText += limitOnlyMinutes + chooseNumberForm(
+            timespanText += limitOnlyMinutes + " " + chooseNumberForm(
                 limitOnlyMinutes, JSON.parse($countdonwn.attr("data-l10n-minutes-forms")));
         }
         var limitOnlySeconds = limitSeconds % 60;
         if (limitOnlySeconds > 0) {
-            if (timespanText.length > 0) { contentText += " "; }
-            timespanText += limitOnlySeconds + chooseNumberForm(
+            if (timespanText.length > 0) { timespanText += " "; }
+            timespanText += limitOnlySeconds + " " + chooseNumberForm(
                 limitOnlySeconds, JSON.parse($countdonwn.attr("data-l10n-seconds-forms")));
         }
         showModalOverlay(
