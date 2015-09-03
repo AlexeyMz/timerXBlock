@@ -31,7 +31,7 @@ function timerXBlockInitView(runtime, element) {
         }
         var limitOnlySeconds = limitSeconds % 60;
         if (limitOnlySeconds > 0) {
-            if (contentText.length > 0) { contentText += " "; }
+            if (timespanText.length > 0) { contentText += " "; }
             timespanText += limitOnlySeconds + chooseNumberForm(
                 limitOnlySeconds, JSON.parse($countdonwn.attr("data-l10n-seconds-forms")));
         }
