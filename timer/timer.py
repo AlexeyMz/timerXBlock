@@ -68,8 +68,8 @@ class timerXBlock(XBlock):
                 'action_begin': u"Приступить к тесту",
                 'time_over': u"Время на выполнение теста истекло",
                 'action_see_results': u"Перейти к результатам",
-                'minutes_forms': u'["минута","минут","минуты"]',
-                'seconds_forms': u'["секунда","секунд","секунды"]',
+                'minutes_forms': u'["минута","минуты","минут"]',
+                'seconds_forms': u'["секунда","секунды","секунд"]',
             },
         }
         html = self.render_template('static/html/timer_view.html', context)

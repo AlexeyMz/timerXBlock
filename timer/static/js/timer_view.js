@@ -85,7 +85,7 @@ function timerXBlockInitView(runtime, element) {
                 }));
     }
     function chooseNumberForm(number, titles) {
-        // e.g. ['one', 'five', 'three']
+        // e.g. ['one', 'three', 'five']
         cases = [2, 0, 1, 1, 1, 2];
         return titles[
             (number % 100 > 4 && number % 100 < 20)
