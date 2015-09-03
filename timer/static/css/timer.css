@@ -1,26 +1,6 @@
-.flash-download-button {
-    margin: 0;
-    margin-top: 15px;
-    padding: 0;
-    display: inline-block;
-    vertical-align: top;
-}
-.flash-download-button a {
-    transition: all 0.25s ease-in-out 0s;
-    font-size: 14px;
-    line-height: 14px;
-    float: left;
-    border-radius: 3px;
-    background-color: #FFF;
-    padding: 15px;
-    color: #646464;
-}
-.flash-download-button a:hover, a:focus {
-    background-color: #009FE6;
-    color: #FFF;
-}
 .timerModalOverlay {
     position: fixed;
+    z-index: 1000;
     top: 0;
     bottom: 0;
     left: 0;
@@ -38,4 +18,6 @@
 }
 .timerModalOverlay .timerModalAction {
     color: white;
+    text-decoration: underline;
+    font-size: 30px;
 }

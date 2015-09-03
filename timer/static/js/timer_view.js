@@ -38,7 +38,7 @@ function timerXBlockInitView(runtime, element) {
     }
     function onLimitReached() {
         showModalOverlay("TIME_OVER", "ACTION_SEE_RESULTS", function () {
-            window.location.href = "../../progress";
+            window.location.href = "../../../progress";
         });
     }
     function showModalOverlay(contentText, actionText, actionCallback) {
@@ -48,7 +48,7 @@ function timerXBlockInitView(runtime, element) {
         }
         $overlay.empty()
             .append($("<div class='timerModalContent'/>").text(contentText))
-            .append($("<a class='timerModalAction'>")
+            .append($("<a class='timerModalAction' href='javascript:void(0)'>")
                 .text(actionText)
                 .click(actionCallback));
     }
