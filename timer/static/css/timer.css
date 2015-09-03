@@ -19,3 +19,23 @@
     background-color: #009FE6;
     color: #FFF;
 }
+.timerModalOverlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    opacity: 0.8;
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.timerModalOverlay .timerModalContent {
+    font-size: 70px;
+    color: white;
+}
+.timerModalOverlay .timerModalAction {
+    color: white;
+}
