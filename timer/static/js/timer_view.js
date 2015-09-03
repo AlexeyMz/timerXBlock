@@ -10,7 +10,7 @@ function timerXBlockInitView(runtime, element) {
     var usageId = element.attr('data-usage-id');
     var key = "timerXBlock_" + encodeURIComponent(usageId);
     var startDateText = localStorage.getItem(key);
-    if (startText) {
+    if (startDateText) {
         resumeTimer(new Date(startDateText));
     } else {
         showModalOverlay("START_EXAM", "ACTION_BEGIN", function () {
