@@ -23,8 +23,9 @@ function timerXBlockInitView(runtime, element) {
     if (startDateText) {
         resumeTimer(new Date(startDateText));
     } else {
+        var limitMinutesText = toFixed(limitSeconds / 60, 1);
         showModalOverlay(
-            $countdonwn.attr("data-l10n-start-exam"),
+            $countdonwn.attr("data-l10n-start-exam").replace("{}", limitMinutesText),
             $countdonwn.attr("data-l10n-action-begin"),
             function () {
                 startDate = new Date();
@@ -34,6 +35,10 @@ function timerXBlockInitView(runtime, element) {
             true);
     }
     
+    function toFixed(value, precision) {
+        var power = Math.pow(10, precision || 0);
+        return String(Math.round(value * power) / power);
+    }
     function resumeTimer(startDate) {
         var now = new Date();
         var secondsLeft = limitSeconds - (now - startDate) / 1000;
