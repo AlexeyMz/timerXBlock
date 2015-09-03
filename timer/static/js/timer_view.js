@@ -7,10 +7,11 @@ function timerXBlockInitView(runtime, element) {
     debugger;
     if (element.innerHTML) element = $(element);
     var $countdonwn = element.find('.countdown');
+    var limitSeconds = parseInt($countdonwn.attr('data-seconds'), 10);
     if ($(".xblock-author_view.xmodule_VerticalModule").length !== 0) {
         /* xblock rendered in author_view */
         $countdonwn.timeTo({
-            seconds: parseInt($countdonwn.attr('data-seconds'), 10),
+            seconds: limitSeconds,
             displayHours: false,
             start: false
         });
@@ -22,15 +23,18 @@ function timerXBlockInitView(runtime, element) {
     if (startDateText) {
         resumeTimer(new Date(startDateText));
     } else {
-        showModalOverlay("START_EXAM", "ACTION_BEGIN", function () {
-            startDate = new Date();
-            localStorage.setItem(key, startDate);
-            resumeTimer(startDate);
-        }, true);
+        showModalOverlay(
+            $countdonwn.attr("data-l10n-start-exam"),
+            $countdonwn.attr("data-l10n-action-begin"),
+            function () {
+                startDate = new Date();
+                localStorage.setItem(key, startDate);
+                resumeTimer(startDate);
+            },
+            true);
     }
     
     function resumeTimer(startDate) {
-        var limitSeconds = parseInt($countdonwn.attr('data-seconds'), 10);
         var now = new Date();
         var secondsLeft = limitSeconds - (now - startDate) / 1000;
         console.log('seconds left: ' + secondsLeft);
@@ -46,9 +50,13 @@ function timerXBlockInitView(runtime, element) {
         }
     }
     function onLimitReached() {
-        showModalOverlay("TIME_OVER", "ACTION_SEE_RESULTS", function () {
-            window.location.href = "../../../progress";
-        }, false);
+        showModalOverlay(
+            $countdonwn.attr("data-l10n-time-over"),
+            $countdonwn.attr("data-l10n-action-see-results"),
+            function () {
+                window.location.href = "../../../progress";
+            },
+            false);
     }
     function showModalOverlay(contentText, actionText, actionCallback, dismissOnAction) {
         var $overlay = $(".timerModalOverlay");
