@@ -19,7 +19,7 @@ class timerXBlock(XBlock):
     Fields
     '''
     display_name = String(display_name=u"Название блока",
-        default="Time Limit",
+        default=u"Ограничение по времени",
         scope=Scope.settings,
         help=u"Название блока, отображаемое в строке навигации в верхней части страницы.")
 

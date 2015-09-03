@@ -50,6 +50,9 @@ function timerXBlockInitView(runtime, element) {
             .append($("<div class='timerModalContent'/>").text(contentText))
             .append($("<a class='timerModalAction' href='javascript:void(0)'>")
                 .text(actionText)
-                .click(actionCallback));
+                .click(function() {
+                    $overlay.remove();
+                    actionCallback();
+                }));
     }
 }
