@@ -27,13 +27,13 @@ function timerXBlockInitView(runtime, element) {
         var limitOnlyMinutes = Math.floor(limitSeconds / 60);
         if (limitOnlyMinutes > 0) {
             contentText += limitOnlyMinutes + chooseNumberForm(
-                limitOnlyMinutes, JSON.parse($countdonwn.attr("data-l10n-minutes-forms"));
+                limitOnlyMinutes, JSON.parse($countdonwn.attr("data-l10n-minutes-forms")));
         }
         var limitOnlySeconds = limitSeconds % 60;
         if (limitOnlySeconds > 0) {
             if (contentText.length > 0) { contentText += " "; }
             contentText += limitOnlySeconds + chooseNumberForm(
-                limitOnlySeconds, JSON.parse($countdonwn.attr("data-l10n-seconds-forms"));
+                limitOnlySeconds, JSON.parse($countdonwn.attr("data-l10n-seconds-forms")));
         }
         showModalOverlay(
             $countdonwn.attr("data-l10n-start-exam").replace("{}", timespanText),
