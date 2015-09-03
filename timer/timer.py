@@ -64,10 +64,12 @@ class timerXBlock(XBlock):
             'time_limit_seconds': self.time_limit_seconds,
             'redirect_url': self.redirect_url,
             'l10n': {
-                'start_exam': u"На тестирование отводится {} минут",
+                'start_exam': u"На тестирование отводится {}",
                 'action_begin': u"Приступить к тесту",
                 'time_over': u"Время на выполнение теста истекло",
                 'action_see_results': u"Перейти к результатам",
+                'minutes_forms': u'["минута","минут","минуты"]',
+                'seconds_forms': u'["секунда","секунд","секунды"]',
             },
         }
         html = self.render_template('static/html/timer_view.html', context)

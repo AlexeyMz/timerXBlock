@@ -23,9 +23,20 @@ function timerXBlockInitView(runtime, element) {
     if (startDateText) {
         resumeTimer(new Date(startDateText));
     } else {
-        var limitMinutesText = toFixed(limitSeconds / 60, 1);
+        var timespanText = "";
+        var limitOnlyMinutes = Math.floor(limitSeconds / 60);
+        if (limitOnlyMinutes > 0) {
+            contentText += limitOnlyMinutes + chooseNumberForm(
+                limitOnlyMinutes, JSON.parse($countdonwn.attr("data-l10n-minutes-forms"));
+        }
+        var limitOnlySeconds = limitSeconds % 60;
+        if (limitOnlySeconds > 0) {
+            if (contentText.length > 0) { contentText += " "; }
+            contentText += limitOnlySeconds + chooseNumberForm(
+                limitOnlySeconds, JSON.parse($countdonwn.attr("data-l10n-seconds-forms"));
+        }
         showModalOverlay(
-            $countdonwn.attr("data-l10n-start-exam").replace("{}", limitMinutesText),
+            $countdonwn.attr("data-l10n-start-exam").replace("{}", timespanText),
             $countdonwn.attr("data-l10n-action-begin"),
             function () {
                 startDate = new Date();
@@ -35,10 +46,6 @@ function timerXBlockInitView(runtime, element) {
             true);
     }
     
-    function toFixed(value, precision) {
-        var power = Math.pow(10, precision || 0);
-        return String(Math.round(value * power) / power);
-    }
     function resumeTimer(startDate) {
         var now = new Date();
         var secondsLeft = limitSeconds - (now - startDate) / 1000;
@@ -76,5 +83,12 @@ function timerXBlockInitView(runtime, element) {
                     if (dismissOnAction) { $overlay.remove(); }
                     actionCallback();
                 }));
+    }
+    function chooseNumberForm(number, titles) {
+        // e.g. ['one', 'five', 'three']
+        cases = [2, 0, 1, 1, 1, 2];
+        return titles[
+            (number % 100 > 4 && number % 100 < 20)
+            ? 2 : cases[(number % 10 < 5) ? number % 10 : 5] ];
     }
 }
