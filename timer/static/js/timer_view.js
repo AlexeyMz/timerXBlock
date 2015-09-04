@@ -102,15 +102,11 @@ function timerXBlockInitView(runtime, element) {
         }
         function startExamAgain() {
             localStorage.removeItem(key);
-            if (studentAlreadyHasSubmissions) {
-                $.ajax({
-                    url: $countdonwn.attr("data-reset-all-student-attempts-url"),
-                    success: refreshPage,
-                    error: refreshPage
-                });
-            } else {
-                refreshPage();
-            }
+            $.ajax({
+                url: $countdonwn.attr("data-reset-all-student-attempts-url"),
+                success: refreshPage,
+                error: refreshPage
+            });
             function refreshPage() { window.location.reload(); }
         }
     }
