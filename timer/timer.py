@@ -73,11 +73,17 @@ class timerXBlock(XBlock):
                 'minutes_forms': u'["минута","минуты","минут"]',
                 'seconds_forms': u'["секунда","секунды","секунд"]',
             },
-            'student_has_course_state_url': reverse('student_has_course_state',
-                kwargs={'course_id': unicode(self.course_id)}),
-            'reset_all_student_attempts_url': reverse('reset_all_student_attempts',
-                kwargs={'course_id': unicode(self.course_id)}),
         }
+        try:
+            context.update({
+                'student_has_course_state_url': reverse('student_has_course_state',
+                    kwargs={'course_id': unicode(self.course_id)}),
+                'reset_all_student_attempts_url': reverse('reset_all_student_attempts',
+                    kwargs={'course_id': unicode(self.course_id)}),
+            })
+        except NoReverseMatch:
+            # xblock rendered in studio
+            pass
         html = self.render_template('static/html/timer_view.html', context)
         
         frag = Fragment(html)

@@ -15,9 +15,11 @@
 .timerModalOverlay .timerModalContent {
     font-size: 70px;
     color: white;
+    margin-bottom: .3em;
 }
 .timerModalOverlay .timerModalAction {
     color: white;
     text-decoration: underline;
     font-size: 40px;
+    margin: .3em 0
 }
