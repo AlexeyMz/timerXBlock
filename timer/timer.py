@@ -2,7 +2,7 @@
 """ timerXBlock main Python class"""
 
 import pkg_resources
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, NoReverseMatch
 from django.template import Context, Template
 
 from xblock.core import XBlock

@@ -16,7 +16,7 @@ def package_data(pkg, root):
 
 setup(
     name='timer-xblock',
-    version='0.2.40',
+    version='0.2.41',
     description='This XBlock provides a way to setup a time limit of exam course.',
     packages=[
         'timer',
