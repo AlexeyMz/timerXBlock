@@ -65,9 +65,11 @@ class timerXBlock(XBlock):
             'redirect_url': self.redirect_url,
             'l10n': {
                 'start_exam': u"На тестирование отводится {}",
-                'action_begin': u"Приступить к тесту",
                 'time_over': u"Время на выполнение теста истекло",
+                'exam_already_submitted': u"Вы уже проходили данное тестирование",
+                'action_begin': u"Приступить к тесту",
                 'action_see_results': u"Перейти к результатам",
+                'action_start_again': u"Пройти тестирование заново",
                 'minutes_forms': u'["минута","минуты","минут"]',
                 'seconds_forms': u'["секунда","секунды","секунд"]',
             },

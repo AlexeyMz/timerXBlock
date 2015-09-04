@@ -17,84 +17,124 @@ function timerXBlockInitView(runtime, element) {
         });
         return;
     }
+    
     $.ajax({
         url: $countdonwn.attr("data-student-has-course-state-url"),
-        success: function (result) {
-            console.log("success");
-            console.log(result);
+        success: function (studentAlreadyHasSubmissions) {
+            setUpExam(studentAlreadyHasSubmissions);
         },
         error: function (xhr, textStatus, errorThrown) {
-            console.log("error")
+            console.log("Error querying student exam status " +
+                "(whether it is 'not started' or 'has submissions')");
             console.log([textStatus, errorThrown]);
         }
     });
-    return;
-    var usageId = element.attr('data-usage-id');
-    var key = "timerXBlock_" + encodeURIComponent(usageId);
-    var startDateText = localStorage.getItem(key);
-    if (startDateText) {
-        resumeTimer(new Date(startDateText));
-    } else {
-        var timespanText = "";
-        var limitOnlyMinutes = Math.floor(limitSeconds / 60);
-        if (limitOnlyMinutes > 0) {
-            timespanText += limitOnlyMinutes + " " + chooseNumberForm(
-                limitOnlyMinutes, JSON.parse($countdonwn.attr("data-l10n-minutes-forms")));
-        }
-        var limitOnlySeconds = limitSeconds % 60;
-        if (limitOnlySeconds > 0) {
-            if (timespanText.length > 0) { timespanText += " "; }
-            timespanText += limitOnlySeconds + " " + chooseNumberForm(
-                limitOnlySeconds, JSON.parse($countdonwn.attr("data-l10n-seconds-forms")));
-        }
-        showModalOverlay(
-            $countdonwn.attr("data-l10n-start-exam").replace("{}", timespanText),
-            $countdonwn.attr("data-l10n-action-begin"),
-            function () {
-                startDate = new Date();
-                localStorage.setItem(key, startDate);
-                resumeTimer(startDate);
-            },
-            true);
-    }
     
-    function resumeTimer(startDate) {
-        var now = new Date();
-        var secondsLeft = limitSeconds - (now - startDate) / 1000;
-        console.log('seconds left: ' + secondsLeft);
-        if (secondsLeft > 0) {
-            $countdonwn.timeTo({
-                seconds: limitSeconds,
-                displayHours: false,
-                callback:  onLimitReached
-            });
+    function setUpExam(studentAlreadyHasSubmissions) {
+        var usageId = element.attr('data-usage-id');
+        var key = "timerXBlock_" + encodeURIComponent(usageId);
+        var startDateText = localStorage.getItem(key);
+        if (startDateText) {
+            resumeTimer(new Date(startDateText));
+        } else if (studentAlreadyHasSubmissions) {
+            showModalOverlay($countdonwn.attr("data-l10n-exam-already-submitted"), [{
+                text: $countdonwn.attr("data-l10n-action-see-results"),
+                dismissOnClick: false,
+                callback: function () {
+                    window.location.href = "../../../progress";
+                }
+            }, {
+                text: $countdonwn.attr("data-l10n-action-start-again"),
+                dismissOnClick: false,
+                callback: startExamAgain
+            }]);
         } else {
-            $countdonwn.timeTo({ seconds: 1, displayHours: false, start: false });
-            onLimitReached();
+            var timespanText = "";
+            var limitOnlyMinutes = Math.floor(limitSeconds / 60);
+            if (limitOnlyMinutes > 0) {
+                timespanText += limitOnlyMinutes + " " + chooseNumberForm(
+                    limitOnlyMinutes, JSON.parse($countdonwn.attr("data-l10n-minutes-forms")));
+            }
+            var limitOnlySeconds = limitSeconds % 60;
+            if (limitOnlySeconds > 0) {
+                if (timespanText.length > 0) { timespanText += " "; }
+                timespanText += limitOnlySeconds + " " + chooseNumberForm(
+                    limitOnlySeconds, JSON.parse($countdonwn.attr("data-l10n-seconds-forms")));
+            }
+            showModalOverlay($countdonwn.attr("data-l10n-start-exam").replace("{}", timespanText), [{
+                text: $countdonwn.attr("data-l10n-action-begin"),
+                dismissOnClick: true,
+                callback: function () {
+                    startDate = new Date();
+                    localStorage.setItem(key, startDate);
+                    resumeTimer(startDate);
+                }
+            }]);
+        }
+        
+        function resumeTimer(startDate) {
+            var now = new Date();
+            var secondsLeft = limitSeconds - (now - startDate) / 1000;
+            console.log('seconds left: ' + secondsLeft);
+            if (secondsLeft > 0) {
+                $countdonwn.timeTo({
+                    seconds: limitSeconds,
+                    displayHours: false,
+                    callback:  onLimitReached
+                });
+            } else {
+                $countdonwn.timeTo({ seconds: 1, displayHours: false, start: false });
+                onLimitReached();
+            }
+        }
+        function onLimitReached() {
+            showModalOverlay($countdonwn.attr("data-l10n-time-over"), [{
+                text: $countdonwn.attr("data-l10n-action-see-results"),
+                dismissOnClick: false,
+                callback: function () {
+                    window.location.href = "../../../progress";
+                }
+            }, {
+                text: $countdonwn.attr("data-l10n-action-start-again"),
+                dismissOnClick: false,
+                callback: startExamAgain
+            }]);
+        }
+        function startExamAgain() {
+            localStorage.removeItem(key);
+            if (studentAlreadyHasSubmissions) {
+                $.ajax({
+                    url: $countdonwn.attr("data-reset-all-student-attempts-url"),
+                    success: refreshPage,
+                    error: refreshPage
+                });
+            } else {
+                refreshPage();
+            }
+            function refreshPage() { window.location.reload(); }
         }
     }
-    function onLimitReached() {
-        showModalOverlay(
-            $countdonwn.attr("data-l10n-time-over"),
-            $countdonwn.attr("data-l10n-action-see-results"),
-            function () {
-                window.location.href = "../../../progress";
-            },
-            false);
-    }
-    function showModalOverlay(contentText, actionText, actionCallback, dismissOnAction) {
+    /**
+     * @param contentText: string
+     * @param actions: { text: string; callback: () => void, dismissOnClick: boolean }
+     */
+    function showModalOverlay(contentText, actions) {
         var $overlay = $(".timerModalOverlay");
         if ($overlay.length === 0) {
             $overlay = $("<div class='timerModalOverlay'/>").appendTo(document.body);
         }
-        $overlay.empty()
-            .append($("<div class='timerModalContent'/>").text(contentText))
-            .append($("<a class='timerModalAction' href='javascript:void(0)'>")
-                .text(actionText)
+        $overlay.empty().append($("<div class='timerModalContent'/>").text(contentText));
+        for (var i = 0; i < actions.length; i++) {
+            addAction(actions[i]);
+        }
+        function addAction(action) {
+            $overlay.append($("<a class='timerModalAction' href='javascript:void(0)'>")
+                .text(action.text)
                 .click(function() {
-                    if (dismissOnAction) { $overlay.remove(); }
-                    actionCallback();
+                    if (action.dismissOnClick) { $overlay.remove(); }
+                    action.callback();
                 }));
+        }
     }
     function chooseNumberForm(number, titles) {
         // e.g. ['one', 'three', 'five']
