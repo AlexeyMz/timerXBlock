@@ -4,7 +4,6 @@ function timerXBlockInitView(runtime, element) {
      * In the LMS, element is the DOM container.
      * In the CMS, element is the jQuery object associated*
      * So here I make sure element is the jQuery object */
-    debugger;
     if (element.innerHTML) element = $(element);
     var $countdonwn = element.find('.countdown');
     var limitSeconds = parseInt($countdonwn.attr('data-seconds'), 10);

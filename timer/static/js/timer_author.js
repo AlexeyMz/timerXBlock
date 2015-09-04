@@ -6,7 +6,6 @@ function timerXBlockInitAuthor(runtime, element) {
      * So here I make sure element is the jQuery object */
     if(element.innerHTML) element = $(element);
     var $countdonwn = element.find('.countdown');
-    debugger;
     $countdonwn.timeTo({
         seconds: parseInt($countdonwn.attr('data-seconds'), 10),
         displayHours: false,
