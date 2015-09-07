@@ -1,36 +1,29 @@
-flashXBlock
+timerXBlock
 =========
 
 ### Description ###
 
-This XBlock provides an easy way to embed a Flash (.swf) file.
-
-- Download button available
-- (Optional) Source document download button, for example to provide another format
-
-### Customize the XBlock ###
-
-- By default, Flash Download Allowed is set on True. The default value can  be changed in `flashXBlock / flash / flash.py`
+This XBlock provides an easy way to set a time limit to a particular vertical in course.
 
 ### Install / Update the XBlock ###
 
     # Move to the folder where you want to download the XBlock
     cd /edx/app/edxapp
     # Download the XBlock
-    sudo -u edxapp git clone https://github.com/MarCnu/flashXBlock.git
+    sudo -u edxapp git clone https://github.com/vismartltd/timerXBlock.git
     # Install the XBlock
-    sudo -u edxapp /edx/bin/pip.edxapp install flashXBlock/
+    sudo -u edxapp /edx/bin/pip.edxapp install timerXBlock/
     # Upgrade the XBlock if it is already installed, using --upgrade
-    sudo -u edxapp /edx/bin/pip.edxapp install flashXBlock/ --upgrade
+    sudo -u edxapp /edx/bin/pip.edxapp install timerXBlock/ --upgrade
     # Remove the installation files
-    sudo rm -r flashXBlock
+    sudo rm -r timerXBlock
 
 ### Reboot if something isn't right ###
 
     sudo /edx/bin/supervisorctl -c /edx/etc/supervisord.conf restart edxapp:
 
 ### Activate the XBlock in your course ###
-Go to `Settings -> Advanced Settings` and set `advanced_modules` to `["flash"]`.
+Go to `Settings -> Advanced Settings` and set `advanced_modules` to `["timer"]`.
 
 ### Use the XBlock in a unit ###
-Select `Advanced -> Flash` in your unit.
+Select `Advanced -> Time Limit` in your unit.
