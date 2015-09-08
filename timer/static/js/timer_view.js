@@ -73,7 +73,7 @@ function timerXBlockInitView(runtime, element) {
         
         function resumeTimer(startDate) {
             var now = new Date();
-            var secondsLeft = limitSeconds - (now - startDate) / 1000;
+            var secondsLeft = Math.round(limitSeconds - (now - startDate) / 1000);
             console.log('seconds left: ' + secondsLeft);
             if (secondsLeft > 0) {
                 $countdonwn.timeTo({
