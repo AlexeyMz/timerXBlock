@@ -77,7 +77,7 @@ function timerXBlockInitView(runtime, element) {
             console.log('seconds left: ' + secondsLeft);
             if (secondsLeft > 0) {
                 $countdonwn.timeTo({
-                    seconds: limitSeconds,
+                    seconds: secondsLeft,
                     displayHours: false,
                     callback:  onLimitReached
                 });
